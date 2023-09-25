@@ -10,15 +10,7 @@ for i in range(num):
     else:
         m = b
         i = a
-    while True:
-        aa = m%i
-        if aa == 0:
-            maxx = i
-            break
-        if i%aa == 0:
-            maxx = aa
-            break
-        else:
-            m = i
-            i = aa
-    print((a*b)//maxx)
+    while i != 0:
+         m, i = i, m%i
+    
+    print((a*b)//m)
