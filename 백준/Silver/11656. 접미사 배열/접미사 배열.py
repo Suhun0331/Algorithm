@@ -1,13 +1,9 @@
-a = list(input())
+a = input()
 
 answer = []
 
 for i in range(len(a)):
-    strr = ''
-    for j in a:
-        strr += j
-    answer.append(strr)
-    del a[0]
+    answer.append(a[i:])
     
 answer.sort()
 for i in answer:
