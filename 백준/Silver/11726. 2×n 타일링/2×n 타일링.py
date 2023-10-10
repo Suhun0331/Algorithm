@@ -4,7 +4,7 @@ n = int(sys.stdin.readline())
 
 lst = [0]*1001
 
-def dp(n):
+def df(n):
     if n == 1:
         return 1
     if n == 2:
@@ -12,6 +12,6 @@ def dp(n):
     if lst[n] != 0:
         return lst[n]
     else:
-        lst[n] = (dp(n-1)+dp(n-2))%10007
+        lst[n] = (df(n-1) + df(n-2))%10007
         return lst[n]
-print(dp(n))
+print(df(n))
