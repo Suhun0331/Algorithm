@@ -1,20 +1,16 @@
-import sys
+n = int(input())
 
-n = int(sys.stdin.readline())
+lst = [0] * 11
 
-lst = [0]*11
-
-for k in range(1, 11):
-    summ = 0
-    if k == 1:
-        lst[k] = 1
-    elif k == 2:
-        lst[k] = 2
-    elif k == 3:
-        lst[k] = 4
+for i in range(1, 11):
+    if i == 1:
+        lst[i] = 1
+    elif i == 2:
+        lst[i] = 2
+    elif i == 3:
+        lst[i] = 4
     else:
-        lst[k] = lst[k-1]+lst[k-2]+lst[k-3]
-
+        lst[i] = lst[i-1]+lst[i-2]+lst[i-3]
 for i in range(n):
-    a = int(sys.stdin.readline())
-    print(lst[a])
+    num = int(input())
+    print(lst[num])
