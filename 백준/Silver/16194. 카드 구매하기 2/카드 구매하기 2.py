@@ -1,18 +1,15 @@
-import sys
-n = int(sys.stdin.readline())
+n = int(input())
+lst = [0]*(n+1)
+maxx = [0] * (n+1)
 
-cost = [0] + list(map(int, sys.stdin.readline().split()))
-minn = [0]*(n+1)
-
-
+lst = list(map(int, input().split()))
+lst.insert(0,0)
 for i in range(1, n+1):
     if i == 1:
-        minn[i] = cost[i]
+        maxx[i] = lst[i]
     else:
-        minn[i] = cost[i]
+        maxx[i] = lst[i]
         for j in range(1, i//2+1):
-            if minn[i]>minn[j]+minn[i-j]:
-                minn[i] = minn[j]+minn[i-j]
-                
-
-print(minn[n])
+            if maxx[i] > maxx[j]+maxx[i-j]:
+                maxx[i] = maxx[j]+maxx[i-j]
+print(maxx[n])
