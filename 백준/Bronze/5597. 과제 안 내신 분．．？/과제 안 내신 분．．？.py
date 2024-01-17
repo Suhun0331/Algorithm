@@ -1,12 +1,8 @@
-list = []
-
-for i in range(1,31):
-    list.append(i)
-    
+arr = []
+for i in range(30):
+    arr.append(i+1)
 for i in range(28):
     a = int(input())
-    list.remove(a)
-
-list.sort()
-print(list[0])
-print(list[1])
+    arr.remove(a)
+for i in arr:
+    print(i)
