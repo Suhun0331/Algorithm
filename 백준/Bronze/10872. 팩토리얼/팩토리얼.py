@@ -1,8 +1,17 @@
-num = int(input())
+fac = 1
 
-mul = 1
+def factorial(n):
+    global fac
+    if n == 1:
+        fac *= 1
+    elif n == 0:
+        fac = 1
+    else:
+        fac *= n
+        n -= 1
+        factorial(n)
 
-for i in range(1, num+1):
-    mul *= i
+n = int(input())
+factorial(n)
 
-print(mul)
+print(fac)
