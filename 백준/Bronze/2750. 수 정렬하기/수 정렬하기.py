@@ -1,7 +1,10 @@
-a = int(input())
+num = int(input())
+
 lst = []
-for i in range(a):
-    lst.append(int(input()))
-lst.sort()
-for i in range(a):
-    print(lst[i])
+for i in range(num):
+    a = int(input())
+    lst.append(a)
+
+lst = sorted(lst)
+for i in lst:
+    print(i)
