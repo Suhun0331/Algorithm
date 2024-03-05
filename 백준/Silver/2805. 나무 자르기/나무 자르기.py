@@ -2,7 +2,9 @@ import sys
 n, m = map(int,sys.stdin.readline().split())
 lst = list(map(int,sys.stdin.readline().split()))
 
-start, end = 1, max(lst)
+start = 0
+end = max(lst)
+ans = 0
 
 while start <= end:
     mid = (start+end)//2
@@ -14,7 +16,8 @@ while start <= end:
     if summ < m:
         end = mid-1
     else:
+        ans = mid
         start = mid+1
 
 
-print(end)
+print(ans)
