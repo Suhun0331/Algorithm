@@ -1,3 +1,3 @@
 # BAEKJOON
 
-## Solved.AC : Silver 1
+## Solved.AC : Gold 5
