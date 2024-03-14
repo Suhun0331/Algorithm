@@ -1,19 +1,21 @@
-n = int(input())
-for i in range(n):
+import sys
+
+n = int(sys.stdin.readline())
+stack = []
+for _ in range(n):
+    stack = []
     a = list(input())
-    lst = []
-    
     check = 0
-    for j in range(len(a)):
-        if a[j] == '(':
-            lst.append(a[j])
-        elif a[j] == ')':
-            if len(lst) != 0:
-                lst.pop()
+    for i in a:
+        if i == '(':
+            stack.append(i)
+        else:
+            if stack:
+                del stack[-1]
             else:
                 check = 1
                 break
-    if check == 0 and len(lst) == 0:
-        print("YES")
+    if stack or check == 1:
+        print('NO')
     else:
-        print("NO")
+        print('YES')
