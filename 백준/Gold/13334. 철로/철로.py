@@ -19,7 +19,7 @@ for i in heap:
     end, start = i
     heapq.heappush(heap2, start)
     start_point = end - length
-    while heap2 and heap2[0] < start_point: # heap[0] = 힙에 저장된 시작 지점 중 최소값
+    while heap2 and heap2[0] < start_point:
         heapq.heappop(heap2)
     max_cnt = max(max_cnt, len(heap2))
     
