@@ -1,15 +1,17 @@
 import heapq
+import sys
+input = sys.stdin.readline
 
-n=int(input())
-lst=[]
+n = int(input())
+arr = []
 for i in range(n):
-  lst.append(list(map(int, input().split())))
+    arr.append(list(map(int, input().split())))
 
-lst.sort(key=lambda x: (x[1]))
-p_list=[]
-for i in lst:
-  heapq.heappush(p_list, i[0])
-  if (len(p_list)>i[1]):
-    heapq.heappop(p_list)
-
-print(sum(p_list))
+arr.sort(key = lambda x : x[1])
+heap = []
+for i in arr:
+    heapq.heappush(heap, i[0])
+    if len(heap) > i[1]:
+        heapq.heappop(heap)
+print(sum(heap))
+    
