@@ -13,7 +13,6 @@ if sum(n)%3 != 0 or 0 not in n:
     print(-1)
 else:
     while heap:
-        num += str((-heapq.heappop(heap)))
+        print(-heapq.heappop(heap), end = '')
 
-    print(int(num))
 
