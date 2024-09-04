@@ -1,26 +1,16 @@
-lst = list(input())
-num = ''
-number = []
-oper = []
-for i in lst:
-    if i != '+' and i != '-':
-        num += i
-    else:
-        oper.append(i)
-        number.append(int(num))
-        num = ''
-number.append(int(num))
+n = input().split('-')
 
-minus = False
+temp = []
+for i in n:
+    num = i.split('+')
+    summ = 0
+    for j in num:
+        summ += int(j)
+    temp.append(summ)
+
 answer = 0
-answer += number[0]
-for i in range(1, len(number)): # 1 2
-    if oper[i-1] == '-':
-        minus = True
-        answer -= number[i]
-    elif oper[i-1] == '+' and minus == True:
-        answer -= number[i]
-    else:
-        answer += number[i]
+answer += temp[0]
+for i in temp[1:]:
+    answer -= i
 
 print(answer)
