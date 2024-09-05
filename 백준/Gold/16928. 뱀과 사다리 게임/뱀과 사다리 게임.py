@@ -1,3 +1,7 @@
+'''
+bfs문제인걸 몰랐으면 생각하기 좀 어려웠을지도 ..?
+'''
+
 from collections import deque
 
 a, b = map(int, input().split())
@@ -32,4 +36,3 @@ while queue:
         break
 
 print(move[100])
-
