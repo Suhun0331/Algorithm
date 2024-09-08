@@ -1,3 +1,9 @@
+'''
+계속 시간초과 나길래 대체 어떻게 더 줄여 했는데
+pypy로 했어야했다
+하ㅏㅏㅏㅏㅏㅏㅏㅏ 내 시간;;;
+'''
+
 from collections import deque
 import sys
 input = sys.stdin.readline
