@@ -1,6 +1,11 @@
 '''
 처음에는 가능 불가능을 어떻게 판단해야할지 아예 아이디어 x
 -> 아이디어 찾아봄
+
+문제 잘못 이해해서 이상하게 풀다가 .. 정답 코드가 너무 다르길래
+문제 다시 읽어보고 알아챔 ..
+
+그 이후 풀이는 그나마 좀 무난 ..? 했던 
 '''
 
 from collections import deque
@@ -32,19 +37,13 @@ while queue:
     for i, j in [(a, b), (a, c), (b, c)]:
         if i == j:
             continue
-        i -= j
-        j *= 2
-
-        
-        a = i
-        b = j
+        a = i-j
+        b = j*2
         c = summ - a - b
         
         max_ = max(a, b, c)
         min_ = min(a, b, c)
-        if visit[max_][min_]:
-            continue
-        else:
+        if not visit[max_][min_]:
             visit[max_][min_] = True
             queue.append((max_, min_))
 
