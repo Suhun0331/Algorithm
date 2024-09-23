@@ -1,5 +1,6 @@
 '''
-
+처음 아이디어 생각하는데 조금 시간 걸리긴 했는데
+구현 자체는 어렵지 않았던 듯 
 '''
 import sys
 sys.setrecursionlimit(10**6)
@@ -11,16 +12,14 @@ visited = [False] * (n+1)
 graph = [[] for _ in range(n+1)]
 
 m = int(input())
-parent = [[] for _ in range(n+1)]
+
 
 for _ in range(m):
     a, b = map(int, input().split())
     graph[a].append(b)
     graph[b].append(a)
-    parent[b].append(a)
 
 sum_arr = [0]*(n+1)
-answer = 0
 def dfs(node):
     global sum_arr
     if visited[node]:
@@ -35,15 +34,7 @@ def dfs(node):
         sum_arr[i] = sum_arr[node] + 1
         dfs(i)
 
-
-
-
 dfs(target1)
 
 print(-1)
-            
-    
-            
-
-
-
+       
