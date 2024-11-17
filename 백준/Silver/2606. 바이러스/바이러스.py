@@ -1,30 +1,25 @@
 n = int(input())
 connect = int(input())
 
-tree = {}
-for i in range(1, n+1):
-    tree[i] = []
-    
-for i in range(connect):
+arr = [[] for _ in range(n+1)]
+
+for _ in range(connect):
     a, b = map(int, input().split())
+    arr[a].append(b)
+    arr[b].append(a)
 
-    tree[a].append(b)
-    tree[b].append(a)
+def dfs(i):
+    global ans
+    visited[i] = 1
+    ans += 1
 
-visited = set()
-cnt = -1
-def dfs(node):
-    global cnt
-    if node in visited:
-        return
-    #print(node)
-    visited.add(node)
-    cnt += 1
-    for i in tree[node]:
-        dfs(i)
+    for n in arr[i]:
+        if visited[n] == 0:
+            dfs(n)
 
+
+visited = [0] * (n+1)
+ans = 0
 dfs(1)
-
-print(cnt)
-
+print(ans-1)
 
