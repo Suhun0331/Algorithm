@@ -1,12 +1,13 @@
-import sys
-n = int(sys.stdin.readline())
+n = int(input())
 
-lst = [0]*1001
-for i in range(1,1001):
+arr = [0] * (n+1)
+
+for i in range(1, n+1):
     if i == 1:
-        lst[i] = 1
-    if i == 2:
-        lst[i] = 3
-    if i>=3:
-        lst[i] = (lst[i-1] + 2*lst[i-2])%10007
-print(lst[n])
+        arr[i] = 1
+    elif i == 2:
+        arr[i] = 3
+    else:
+        arr[i] = arr[i-1]+ 2*arr[i-2]
+print(arr[n]%10007)
+
