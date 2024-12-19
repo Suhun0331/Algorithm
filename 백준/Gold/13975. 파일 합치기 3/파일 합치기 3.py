@@ -1,5 +1,7 @@
 #from collections import deque
 import heapq
+import sys
+input = sys.stdin.readline
 t = int(input())
 for _ in range(t):
 
