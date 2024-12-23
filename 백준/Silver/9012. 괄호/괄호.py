@@ -1,21 +1,25 @@
 import sys
 
-n = int(sys.stdin.readline())
-stack = []
+input = sys.stdin.readline
+
+n = int(input())
+
 for _ in range(n):
+    arr = input().strip()
     stack = []
-    a = list(input())
-    check = 0
-    for i in a:
+    for i in arr:
         if i == '(':
             stack.append(i)
         else:
-            if stack:
-                del stack[-1]
+            if len(stack) != 0:
+                stack.pop()
             else:
-                check = 1
+                stack.append(0)
                 break
-    if stack or check == 1:
+    #print(stack)
+    if stack:
         print('NO')
     else:
         print('YES')
+
+            
