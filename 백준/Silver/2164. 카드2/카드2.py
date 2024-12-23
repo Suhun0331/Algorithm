@@ -1,16 +1,16 @@
-import sys
 from collections import deque
 
-n = int(sys.stdin.readline())
+n = int(input())
 
-lst = deque()
+q = deque()
 for i in range(1, n+1):
-    lst.append(i)
+    q.append(i)
 
+while True:
+    if len(q) == 1:
+        print(q[0])
+        break
+    q.popleft()
+    q.append(q.popleft())
 
-
-while(len(lst) != 1):
-    lst.popleft()
-    tmp = lst.popleft()
-    lst.append(tmp)
-print(lst[0])
+    
