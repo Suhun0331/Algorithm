@@ -6,12 +6,11 @@ dy = [0, 1, 0, -1]
 #(n, m) -> (y, x)
 count = 0
 def dfs(x, y):
-    global count
-    visited[x][y] = True
+    visited[y][x] = True
     for i in range(4):
         xx = x + dx[i]
         yy = y + dy[i]
-        if 0<= xx < n and 0 <= yy < m and not visited[xx][yy] and arr[xx][yy] == 1:
+        if 0<= xx < m and 0 <= yy < n and not visited[yy][xx] and arr[yy][xx] == 1:
             dfs(xx, yy)
 
 for _ in range(t):
@@ -28,7 +27,7 @@ for _ in range(t):
     for i in range(n):
         for j in range(m):
             if visited[i][j] == False and arr[i][j] == 1:
-                dfs(i, j)
+                dfs(j, i)
                 count += 1
     print(count)
 
