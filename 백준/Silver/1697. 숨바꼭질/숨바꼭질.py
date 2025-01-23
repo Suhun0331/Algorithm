@@ -9,6 +9,11 @@ q = deque()
 if n == k:
     print(0)
     sys.exit()
+
+def refact(n, current):
+    visited[n] = True
+    count[n] = count[current] + 1
+    q.append(n)
     
 def bfs(start):
     q.append(start)
@@ -18,23 +23,14 @@ def bfs(start):
             break
         if current + 1 < 100001:
             if not visited[current+1]:
-                visited[current+1] = True
-                count[current+1] = count[current] + 1
-                q.append(current+1)
+                refact(current+1, current)
         if current - 1 >= 0:
             if not visited[current-1]:
-                visited[current-1] = True
-                count[current-1] = count[current] + 1
-                q.append(current-1)
+                refact(current-1, current)
         if current*2 < 100001:
             if not visited[current*2]:
-                visited[current*2] = True
-                count[current*2] = count[current] + 1
-                q.append(current*2)
+                refact(current*2, current)
         
         
 bfs(n)
 print(count[k])
-            
-    
-
