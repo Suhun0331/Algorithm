@@ -1,3 +1,3 @@
 # BAEKJOON
 
-## Solved.AC : Gold 3
+## Solved.AC : Gold 2
