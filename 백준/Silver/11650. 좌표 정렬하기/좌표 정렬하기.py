@@ -1,10 +1,9 @@
-num = int(input())
+n = int(input())
+arr = []
+for _ in range(n):
+    arr.append(list(map(int, input().split())))
 
-lst = []
-for i in range(num):
-    a, b = map(int,input().split())
-    lst.append([a, b])
-lst.sort()
+arr.sort()
 
-for i in range(len(lst)):
-    print(lst[i][0], lst[i][1])
+for i in arr:
+    print(i[0], i[1])
