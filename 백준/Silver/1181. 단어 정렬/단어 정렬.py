@@ -1,13 +1,12 @@
-a = int(input())
+n = int(input())
+arr = []
+for _ in range(n):
+    arr.append(input())
+    
+arr.sort()
+arr.sort(key = len)
 
-lst = []
-
-for i in range(a):
-    lst.append(input())
-lst = sorted(lst)
-lst = sorted(lst, key = len)
-
-print(lst[0])
-for i in range(1, len(lst)):
-    if lst[i] != lst[i-1]:
-        print(lst[i])
+for i in range(len(arr)-1):
+    if arr[i] != arr[i+1]:
+        print(arr[i])
+print(arr[-1])
