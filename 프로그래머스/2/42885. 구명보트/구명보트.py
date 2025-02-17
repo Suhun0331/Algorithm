@@ -6,17 +6,15 @@
 '''
 
 def solution(people, limit):
-    answer = 0
-    
-    people.sort(reverse = True)
+    people.sort()
     first = 0
     last = len(people)-1
     team = 0
     
     while first < last:
         if people[first] + people[last] <= limit:
-            last -= 1
+            first += 1
             team += 1
-        first += 1
+        last -= 1
     
     return len(people) - team
