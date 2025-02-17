@@ -9,18 +9,14 @@ def solution(people, limit):
     answer = 0
     
     people.sort(reverse = True)
-    arr = [False] * (len(people))
+    first = 0
     last = len(people)-1
-    for i in range(len(people)):
-        #print(arr)
-        if arr[i]:
-            #print('check')
-            return answer
-        if people[i] + people[last] <= limit:
-            arr[i], arr[last] = True,True
-            last -= 1
-        else:
-            arr[i] = True
-        answer += 1
+    team = 0
     
-    return answer
+    while first < last:
+        if people[first] + people[last] <= limit:
+            last -= 1
+            team += 1
+        first += 1
+    
+    return len(people) - team
