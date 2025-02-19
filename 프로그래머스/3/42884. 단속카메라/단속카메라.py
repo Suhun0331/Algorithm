@@ -17,23 +17,12 @@ def solution(routes):
     answer = 0
     routes.sort(key = lambda x : (x[1], x[0]))
     point = 30001*(-1)
-    visited = [False] *(len(routes) + 1)
-    for i in range(len(routes) - 1): # 0 ~ 2
-        if visited[i]:
-            continue
-        if routes[i][0] <= point <= routes[i][1]:
-            visited[i] = True
-            continue
-            
-        if routes[i][1] > routes[i+1][0]:
-            visited[i+1] = True
-            
-        point = routes[i][1]
-        answer += 1
-        visited[i] = True
+    for i in routes:
+        if i[0] > point:
+            answer += 1
+            point = i[1]
         
-    if routes[-1][0] > point:
-        answer += 1
+        
     return answer
             
         
