@@ -8,7 +8,4 @@ def solution(s):
             stack.append(i)
         else:
             stack.pop()
-    if not stack:
-        return True
-    else:
-        return False
+    return False if stack else True
