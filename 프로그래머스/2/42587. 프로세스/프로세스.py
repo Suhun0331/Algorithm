@@ -1,25 +1,11 @@
-from collections import deque
-
 def solution(priorities, location):
+    queue =  [(i,p) for i,p in enumerate(priorities)]
     answer = 0
-    q = deque(priorities)
-    target = location
-    while q:
-        print(q, target)
-        if q[0] == max(q):
-            if target == 0:
-                answer += 1
-                return answer
-            q.popleft()
-            answer += 1
-            target -= 1
-            continue
-        q.append(q.popleft())
-        if target == 0:
-            target = len(q)-1
+    while True:
+        cur = queue.pop(0)
+        if any(cur[1] < q[1] for q in queue):
+            queue.append(cur)
         else:
-            target -= 1
-    
-    return answer
-
-
+            answer += 1
+            if cur[0] == location:
+                return answer
