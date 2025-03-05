@@ -10,11 +10,8 @@ def solution(m, n, puddles):
                 map[j][i] = 1
                 continue
             if map[i][j] == -1:
+                map[i][j] = 0
                 continue
-            elif map[i-1][j] == -1:
-                map[i][j] = map[i][j-1]
-            elif map[i][j-1] == -1:
-                map[i][j] = map[i-1][j]
             else:
                 map[i][j] = (map[i-1][j] + map[i][j-1])%1000000007
-    return map[n][m]
+    return map[n][m] 
