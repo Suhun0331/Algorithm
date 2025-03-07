@@ -32,7 +32,7 @@ def dfs(word, wordlist, target, words):
                         
 
 def solution(begin, target, words):
-    wordlist = []
+    wordlist = set()
     dfs(begin, [], target, words)
     if answer == 100:
         return 0
