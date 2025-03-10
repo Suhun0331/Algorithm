@@ -22,10 +22,8 @@ def solution(storage, requests):
             xx,yy = m + dx[i], n + dy[i]
             if 0 <= yy < len(storage) and 0 <= xx < len(storage[0]):
                 if arr[yy][xx] == '0':
-                    arr[yy][xx] = 'x'
                     check(yy, xx)
-                    arr[yy][xx] = '0'
-                if (arr[yy][xx], yy, xx) not in empty :
+                elif (arr[yy][xx], yy, xx) not in empty :
                     empty.append((arr[yy][xx], yy, xx))
                 
                     
@@ -33,38 +31,25 @@ def solution(storage, requests):
         for j in range(len(storage[0])):
             if i==0 or j==0 or i == len(storage)-1 or j == len(storage[0])-1:
                 empty.append((storage[i][j], i, j))
+                
     for i in requests:
         to_remove = []
-        copy = empty.copy()
         if len(i) == 1:
-            for j in copy:
-                value, n, m = j
+            for (value, n, m) in empty[:]:
                 if i == value:
-                    # arr[n][m] = '0'
                     to_remove.append((i, n, m))
-                    # check(n, m)
                     
         else:
             for j in range(len(storage)):
                 for k in range(len(storage[0])):
                     if arr[j][k] == i[0]:
                         to_remove.append((i[0], j, k))
-                        # arr[j][k] = '0'
-                        # check(j, k)
-        # print(to_remove)
+                        
         for v, n, m in to_remove:
             if (v, n, m) in empty:
                 check(n, m)
             arr[n][m] = '0'
         empty = [item for item in empty if item not in to_remove]
-        # print(empty)
         
-        # for i in arr:
-        #     print(i)
-        # print('-----------')
-    for i in arr:
-        for j in i:
-            if j != '0':
-                answer += 1
-    return answer
+    return sum(j != '0' for i in arr for j in i)
     
