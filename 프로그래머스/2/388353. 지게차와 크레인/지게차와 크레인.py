@@ -21,12 +21,13 @@ def solution(storage, requests):
         for i in range(4):
             xx,yy = m + dx[i], n + dy[i]
             if 0 <= yy < len(storage) and 0 <= xx < len(storage[0]):
-                if (arr[yy][xx], yy, xx) not in empty :
-                    empty.append((arr[yy][xx], yy, xx))
                 if arr[yy][xx] == '0':
                     arr[yy][xx] = 'x'
                     check(yy, xx)
                     arr[yy][xx] = '0'
+                if (arr[yy][xx], yy, xx) not in empty :
+                    empty.append((arr[yy][xx], yy, xx))
+                
                     
     for i in range(len(storage)):
         for j in range(len(storage[0])):
