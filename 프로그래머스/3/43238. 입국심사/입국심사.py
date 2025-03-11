@@ -5,23 +5,18 @@
 '''
 
 def solution(n, times):
-    answer = 0
     left, right = min(times), max(times)*n
-    while left<right:
+    while left<=right:
         mid = (left + right)//2
         posible = 0
         for i in times:
             posible += (mid//i)
-        if posible > n:
-            right = mid
-            answer = mid
+        if posible >= n:
+            right = mid-1 
         elif posible < n:
             left = mid+1
-        else:
-            answer = mid
-            right = mid
-        print(mid, posible)
-    return answer
+            
+    return left
 
 
 
