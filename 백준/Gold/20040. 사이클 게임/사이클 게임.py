@@ -29,17 +29,15 @@ def union(x, y):
 n, m = map(int, input().split())
 
 parent = [i for i in range(n)]
-count = 0
-check = False
 for i in range(m):
-    count += 1
     x, y = map(int, input().split())
     if find(x) == find(y):
-        check = True
-        break
+        print(i+1)
+        exit()
     else:
         union(x, y)
-if not check:
-    print(0)
-else:
-    print(count)
+print(0)
+
+
+        
+
