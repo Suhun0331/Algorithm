@@ -1,3 +1,7 @@
+'''
+시간 1/3짜리 코드
+dp를 3차원배열 만드는게 아니라 2차원배열 하나 만들어서 계속 업데이트 시켜주는 방식
+'''
 import sys
 input = sys.stdin.readline
 
@@ -14,24 +18,27 @@ def move(start, end):
   else:
     return 3
 
-dp = [[[float('inf')] * 5 for _ in range(5)] for _ in range(len(arr)+1)]
+dp = [[float('inf')] * 5 for _ in range(5)]
 
-dp[0][0][0] = 0
+dp[0][0] = 0
 
 for i in range(len(arr)):
   target = arr[i]
+  new_dp = [[float('inf')]*5 for _ in range(5)]
   for r in range(5):
     for l in range(5):
+      current = dp[l][r]
       # 다음 스텝 왼발
-      dp[i+1][target][l] = min(dp[i+1][target][l], dp[i][r][l]+move(r, target))
-      # 다음 스텝 오른발
-      dp[i+1][r][target] = min(dp[i+1][r][target], dp[i][r][l]+move(l, target))
+      if target != r:
+        new_dp[target][r] = min(new_dp[target][r], current + move(l, target))
 
+      # 다음 스텝 오른발
+      if target != l:
+        new_dp[l][target] = min(new_dp[l][target], current + move(r, target))
+  dp = new_dp
 
 answer = float('inf')
-# print(dp[len(arr)-1])
 for i in range(5):
-  answer = min(answer, dp[len(arr)][arr[-1]][i])
-  answer = min(answer, dp[len(arr)][i][arr[-1]])
-
+  for j in range(5):
+    answer = min(dp[i][j], answer)
 print(answer)
