@@ -1,6 +1,5 @@
 '''
-시간 1/3짜리 코드
-dp를 3차원배열 만드는게 아니라 2차원배열 하나 만들어서 계속 업데이트 시켜주는 방식
+2차원배열로 시간 축소 한거 + 예외처리로 가지치기 해서 속도 향상
 '''
 import sys
 input = sys.stdin.readline
@@ -27,6 +26,9 @@ for i in range(len(arr)):
   new_dp = [[float('inf')]*5 for _ in range(5)]
   for r in range(5):
     for l in range(5):
+      if dp[l][r] == float('inf'):
+        continue 
+        
       current = dp[l][r]
       # 다음 스텝 왼발
       if target != r:
