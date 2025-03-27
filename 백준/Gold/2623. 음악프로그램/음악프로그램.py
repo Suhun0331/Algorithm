@@ -31,15 +31,13 @@ def sort():
         return
     while q:
         cur = q.popleft()
-        if visited[cur] == True:
-            print(0)
-            return
+        # if visited[cur] == True:
+        #     print(0)
+        #     return
         visited[cur] = True
         result.append(cur)
         for i in graph[cur]:
             indegree[i] -= 1
-
-        
             if indegree[i] == 0:
                 q.append(i)
     if len(result) != n:
