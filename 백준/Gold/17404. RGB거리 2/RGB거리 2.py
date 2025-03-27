@@ -1,55 +1,22 @@
 '''
-첫번째 풀이. 혼자 풀긴 했는데 코드가 너무 많이 중복됨. 맞으면 코드 길이 줄이는 법 찾기
+인터넷 코드, 코드 자체는 깔끔한데 색깔별로 구하려고 반복문 3번 돌려서 시간복잡도는 내 코드가 더 빠를 듯 ..?
 '''
 import sys
 input = sys.stdin.readline
 
 n = int(input())
-inf = float('inf')
-rdp = [[inf]*3 for _ in range(n)]
-gdp = [[inf]*3 for _ in range(n)]
-bdp = [[inf]*3 for _ in range(n)]
-arr = []
-for _ in range(n):
-    arr.append(list(map(int, input().split())))
+rgb = [list(map(int,input().split())) for _ in range(n)]
 
-for i in range(n):
-    if i == 0:
-        rdp[0][0] = arr[0][0]
-        gdp[0][1] = arr[0][1]
-        bdp[0][2] = arr[0][2]
-        # print(rdp)
-        # print(gdp)
-        # print(bdp)
-        # print()
-        continue
-    if i == 1:
-        rdp[1][1] = rdp[0][0] + arr[1][1]
-        rdp[1][2] = rdp[0][0] + arr[1][2]
-        gdp[1][0] = gdp[0][1] + arr[1][0]
-        gdp[1][2] = gdp[0][1] + arr[1][2]
-        bdp[1][1] = bdp[0][2] + arr[1][1]
-        bdp[1][0] = bdp[0][2] + arr[1][0]
-        continue
-    for j in range(3):
-        if j == 0:
-            rdp[i][j] = min(rdp[i-1][1], rdp[i-1][2]) + arr[i][j]
-            gdp[i][j] = min(gdp[i-1][1], gdp[i-1][2]) + arr[i][j]
-            bdp[i][j] = min(bdp[i-1][1], bdp[i-1][2]) + arr[i][j]
-        elif j == 1:
-            rdp[i][j] = min(rdp[i-1][0], rdp[i-1][2]) + arr[i][j]
-            gdp[i][j] = min(gdp[i-1][0], gdp[i-1][2]) + arr[i][j]
-            bdp[i][j] = min(bdp[i-1][0], bdp[i-1][2]) + arr[i][j]
-        elif j == 2:
-            rdp[i][j] = min(rdp[i-1][1], rdp[i-1][0]) + arr[i][j]
-            gdp[i][j] = min(gdp[i-1][1], gdp[i-1][0]) + arr[i][j]
-            bdp[i][j] = min(bdp[i-1][1], bdp[i-1][0]) + arr[i][j]
-    # print(rdp)
-    # print(gdp)
-    # print(bdp)
-    # print()
-    rdp[-1][0] = inf
-    gdp[-1][1] = inf
-    bdp[-1][2] = inf
+ans = 1000001
 
-print(min(min(rdp[-1]), min(gdp[-1]), min(bdp[-1])))
+for i in range(3):
+    dp = [[1001] * 3 for _ in range(n)] #큰 수(1001)로 초기화
+    dp[0][i] = rgb[0][i] # 첫번째 집의 색을 제일 작은 수로 고정 (이외는 1001)
+    for j in range(1,n):
+        dp[j][0] = min(dp[j - 1][1], dp[j - 1][2]) + rgb[j][0] # 삘간색 0
+        dp[j][1] = min(dp[j - 1][0], dp[j - 1][2]) + rgb[j][1] # 초록색 1
+        dp[j][2] = min(dp[j - 1][0], dp[j - 1][1]) + rgb[j][2] # 파란색 2
+    dp[-1][i] = 1000001 # 첫번째 집과 같은 색이면 큰 수를 입력하여 최소비용이 안되도록 함
+    ans = min(ans,min(dp[-1])) # 최소비용
+
+print(ans)
