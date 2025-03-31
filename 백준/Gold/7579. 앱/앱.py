@@ -17,6 +17,7 @@ gpt한테 물어보고 1차원 배열로 가능한 아이디어 파악함
 아예 열을 목표 메모리가 아닌 필요한 cost 기준으로 했어야 함.
 cost의 범위 0 ~ 100이고 n 또한 0 ~ 100이기 때문에 최악의 경우 10000개의 행 생김 -> 시간 절약
 
+함수화 해서 시간 비교
 '''
 import copy
 
@@ -24,21 +25,23 @@ n, m = map(int, input().split())
 memory = [0] + list(map(int, input().split()))
 cost = [0] + list(map(int, input().split()))
 
-dp = [[0]*(sum(cost)+1) for _ in range(n+1)]
-answer = sum(cost)+1
 
-for i in range(1, n+1):
-    for j in range(sum(cost)+1):
-        if j < cost[i]:
-            dp[i][j] = dp[i-1][j]
-        else:
-            dp[i][j] = max(dp[i-1][j], memory[i] + dp[i-1][j-cost[i]])
-        
-        if dp[i][j] >= m:
-            answer = min(answer ,j)
+def func():
+    dp = [[0]*(sum(cost)+1) for _ in range(n+1)]
+    answer = sum(cost)+1
+    for i in range(1, n+1):
+        for j in range(sum(cost)+1):
+            if j < cost[i]:
+                dp[i][j] = dp[i-1][j]
+            else:
+                dp[i][j] = max(dp[i-1][j], memory[i] + dp[i-1][j-cost[i]])
+            
+            if dp[i][j] >= m:
+                answer = min(answer ,j)
+    return answer
     # for i in dp:
     #     print(i)
     # print()
-print(answer)
+print(func())
             
     
