@@ -5,8 +5,12 @@
 처음에 root 뽑힐텐데 그거 우선순위 큐에 넣음
 heapq.heappop으로 뽑아서 위상정렬 업데이트 하고, 업데이트 된 값 다시 우선순위 큐에 넣기.
 그냥 위상정렬 문제를 큐가 아니라 우선순위 큐에 넣는걸로만 바꾸면 될 듯 
+
++ sys 추가 
 '''
 import heapq as hq
+import sys
+input = sys.stdin.readline
 q = []
 hq.heapify(q)
 n, m = map(int, input().split())
