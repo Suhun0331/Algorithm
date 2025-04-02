@@ -21,6 +21,13 @@
 + enumerate 함수 -> 인덱스와 값을 같이 리턴해주기 때문에 shark 리스트에서 해당 인덱스 값 지우기 용이
 
 1차 제출 -> 시간 초과 
+pypy -> 통과 -> 상어 잡는 로직 다시 sort로 바꿔서 시간 비교 
+---
+
+상어가 이동하는걸 for문으로 하나씩 가는게 아니라 그냥 수학 계산으로 O(1)로 처리
+-> 이래야 python3까지 통과됨.
+move함수 못하겠어서 일단 인터넷꺼 가져다씀
+-> 추후에 다시 시도 ..
 '''
 import sys
 input = sys.stdin.readline
@@ -32,48 +39,76 @@ weight = 0
 for i in range(M):
     shark.append(list(map(int, input().split())))
 
-def move(r, c, s, d, z):
-    if d == 1 or d == 2: # 위/아래 - r 변경
-        s %= 2 * (R-1) # 사이클 나눠서 이동 최소화
-        for _ in range(s):
-            if r == 1:
+def move(row, col, s, d, z):
+    # 위
+    if d == 1:
+        if row - s >= 1:
+            row -= s
+        else:
+            s -= row - 1
+            direction = s // (R - 1)
+            location = s % (R - 1)
+            if direction % 2 == 0:
                 d = 2
-            elif r == R:
+                row = 1 + location 
+            else:
+                row = R - location
+
+    # 아래
+    elif d == 2:
+        if row + s <= R:
+            row += s
+        else:
+            s -= R - row
+            direction = s // (R - 1)
+            location = s % (R - 1)
+            if direction % 2 == 0:
                 d = 1
-                
-            if d == 1:
-                r -= 1
-            elif d == 2:
-                r += 1
-                
-    elif d == 3 or d == 4: # 오른쪽/왼쪽 - c 변경
-        s %= 2 * (C-1)
-        for _ in range(s):
-            if c == 1:
-                d = 3
-            elif c == C:
+                row = R - location 
+            else:
+                row = 1 + location
+
+    # 오른쪽
+    elif d == 3:
+        if col + s <= C:
+            col += s
+        else:
+            s -= C - col
+            direction = s // (C - 1)
+            location = s % (C - 1)
+            if direction % 2 == 0:
                 d = 4
-                
-            if d == 3:
-                c += 1
-            elif d == 4:
-                c -= 1
-    return r, c, d
+                col = C - location 
+            else:
+                col = 1 + location
+
+    # 왼쪽
+    elif d == 4:
+        if col - s >= 1:
+            col -= s
+        else:
+            s -= col - 1
+            direction = s // (C - 1)
+            location = s % (C - 1)
+            if direction % 2 == 0:
+                d = 3
+                col = 1 + location
+            else:
+                col = C - location 
+
+    return row, col, d
+
 
 for i in range(1, C+1): # 1초부터 C초까지
     next_shark = {}
     # highshark = [101, 101]
 
-    min_row = R + 1
-    target_idx = -1
-    for idx, (r, c, s, d, z) in enumerate(shark):
-        if c == i and r < min_row:
-            min_row = r
-            target_idx = idx
-    
-    if target_idx != -1:
-        answer += shark[target_idx][4]
-        shark.pop(target_idx)
+    shark.sort()
+    for idx, s in enumerate(shark):
+        if i == s[1]:
+            answer += s[4]
+            del shark[idx]
+            break
     
     for r, c, s, d, z in shark:
         nr, nc, nd = move(r, c, s, d, z)
