@@ -10,6 +10,8 @@
 ---
 메모리 초과 남 -> 마지막에 거의 소수 찾을 때 리스트 만들어서 하지 말고
 그냥 조건 만족하면 바로 answer += 1 하는 방식으로 수정
+
++ 함수화 후 시간 비교
 '''
 
 import sys
@@ -19,27 +21,22 @@ a, b = map(int, input().split())
 max = int(b ** 0.5)
 
 prime = [True] * (max+1)
-
-for i in range(2, max//2):
-    if prime[i]:
-        for j in range(i*i, max+1, i):
-            if prime[j]:
-                prime[j] = False
-
-answer = 0
-
-for i in range(2, max+1):
-    if prime[i]:
-        idx = i
-        while idx <= b:
-            idx *= i
-            if idx <= b and idx >= a:
-                answer += 1
+def solve():
+    for i in range(2, max//2):
+        if prime[i]:
+            for j in range(i*i, max+1, i):
+                if prime[j]:
+                    prime[j] = False
+    
+    answer = 0
+    
+    for i in range(2, max+1):
+        if prime[i]:
+            idx = i
+            while idx <= b:
+                idx *= i
+                if idx <= b and idx >= a:
+                    answer += 1
+    return answer
                     
-print(answer)
-            
-
-
-
-
-
+print(solve())
