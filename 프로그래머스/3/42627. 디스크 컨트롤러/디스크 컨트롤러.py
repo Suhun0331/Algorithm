@@ -21,20 +21,19 @@ import heapq as hq
 
 def solution(jobs):
     heap = []
-    jobs.sort(key = lambda x : x[0])
     now = 0
     finish = 0
     answer = 0
-    idx = 0
+    check = -1
+
     while finish < len(jobs):
-        for job in jobs[idx:]:
-            if now >= job[0]:
-                hq.heappush(heap, (job[1], job[0], jobs.index(job)))
-                idx += 1
+        for job in jobs:
+            if now >= job[0] > check:
+                hq.heappush(heap, (job[1], job[0]))
         
         if heap:
-            time, start, _ = hq.heappop(heap)
-            print(time, start)
+            time, start = hq.heappop(heap)
+            check = now
             now += time
             answer += (now - start)
             finish += 1
