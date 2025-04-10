@@ -14,6 +14,12 @@ dfs? 현재 위치 기준으로 오른쪽으로 이동 / 왼쪽으로 이동 두
 현재 위치에서 가장 가까운 왼/오 인덱스 어떻게 찾지?
 아직 맞춰지지 않은 알파벳 저장하는 리스트 만들기?
 그냥 name 길이의 반 잘라서 그만큼 왼/오 이동 후 찾은 인덱스로 다시 dfs
+
+---
+인터넷 찾아보진 않았는데, 첫 번째 작성한 완성 코드에서 문제가 너무 많아서
+gpt한테 물어봐서 문제 하나하나 해결하면서 풀었음.
+
++ 코드 최적화한 두 번째 제출
 '''
 import sys
 sys.setrecursionlimit(10**6)
@@ -27,31 +33,23 @@ def solution(name): # a b c d e f g h i j k l m n o p q r s t u v w x y z
         
         if all(visited):
             answer = min(answer, curanswer)
-            visited[current] = False
             return
         
         left, right = current, current
-        move_left = 0
-        move_right = 0
         for i in range(len(name)):
-            move_left += 1
-            left -= 1
-            if left == -1:
-                left = len(name)-1
+            left = (left-1)%len(name)
             if not visited[left]:
                 break
                 
         for i in range(len(name)):
-            move_right += 1
-            right += 1
-            if right == len(name):
-                right = 0
+            right = (right+1)%len(name)
             if not visited[right]:
                 break
                 
-        dfs(left, curanswer + move_left)
-        
-        dfs(right, curanswer + move_right)
+        dfs(left, curanswer + (current-left)%len(name))
+        visited[left] = False
+        dfs(right, curanswer + (right-current)%len(name))
+        visited[right] = False
         
         visited[current] = False
     
@@ -71,8 +69,3 @@ def solution(name): # a b c d e f g h i j k l m n o p q r s t u v w x y z
     
     dfs(0, 0)
     return answer
-
-
-
-
-
