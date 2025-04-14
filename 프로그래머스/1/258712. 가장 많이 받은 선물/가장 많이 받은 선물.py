@@ -12,28 +12,29 @@ receive[b][a] = 1 -> b가 a에게 1개를 받았다.
 
 ---
 정답 맞긴 했는데 굳이 배열 두개 안쓰고 give하나만으로도 해결 가능. 
++ 딕셔너리 enumerate로 한방에 처리, 변수 최적화
+
 '''
 def solution(friends, gifts):
-    dict = {}
-    give = [[0]*len(friends) for _ in range(len(friends))]
-    giftscore = [0] * len(friends)
-    anslist = [0] * len(friends)
+    length = len(friends)
+    give = [[0]*length for _ in range(length)]
+    giftscore = [0] * length
+    anslist = [0] * length
     
-    for i in range(len(friends)):
-        dict[friends[i]] = i
+    dict = {name : idx for idx, name in enumerate(friends)}    
     
     for i in gifts:
         aname, bname = i.split()
         aind, bind = dict[aname], dict[bname]
         give[aind][bind] += 1
     
-    for i in range(len(friends)):
+    for i in range(length):
         given = sum(give[i])
-        received = sum(give[j][i] for j in range(len(friends)))
+        received = sum(give[j][i] for j in range(length))
         giftscore[i] = given - received
         
-    for i in range(len(friends)-1):
-        for j in range(i+1, len(friends)):
+    for i in range(length-1):
+        for j in range(i+1, length):
             if give[i][j] > give[j][i]: # i가 j한테 준게 더 많으면
                 anslist[i] += 1
             elif give[i][j] < give[j][i]: # 반대라면
