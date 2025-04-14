@@ -17,6 +17,7 @@
 문제 이유 : visited가 제대로 이뤄지지 않았었음.
 함수화 + visited 제대로 처리한 후 리팩토링
 
+플로이드 워셜로 푼 사람이 많은데, 그럼 n^3 -> 이 방법이 훨씬 빠름.
 '''
 from collections import deque
 
@@ -24,18 +25,14 @@ def solution(n, results):
     answer = 0
     wgraph = [[] for _ in range(n+1)]
     lgraph = [[] for _ in range(n+1)]
-    q = deque()
-    visited = [False] * (n+1)
     for a, b in results:
         wgraph[a].append(b) # wgraph[a] -> a가 이긴 애들
         lgraph[b].append(a) # lgraph[b] -> b가 진 애들
 
     def bfs(start, graph):
         visited = [False] * (n+1)
-        visited[0] = True
         visited[start] = True
         count = 0
-        # 이긴 관계 체크
         q = deque([start])
         while q:
             cur = q.popleft()
@@ -45,8 +42,8 @@ def solution(n, results):
                     visited[k] = True
                     count += 1
         return count
-    final = 0
     
+    final = 0
     for i in range(1, n+1):
         answer = 0
         answer += bfs(i, wgraph)
@@ -57,4 +54,3 @@ def solution(n, results):
 
 
     return final
-
