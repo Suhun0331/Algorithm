@@ -5,27 +5,31 @@
 
 코드 자체는 너무 쉬운 문제. 그냥 아이디어를 생각해내느냐의 문제였음.
 앞으로 이런 문제 만나면 쉽게 풀 수 있는 방법이 뭐가 있을지 먼저 떠올려야 할 듯.
+
++ 코드 최적화 - 초반에 max_node 찾고 그만큼만 메모리 사용하기
 '''
 def solution(edges):
-    indegree = [0] * (1000001)
-    outdegree = [0] * (1000001)
-    maxnode, create, stick, donut, eight = 0, 0, 0, 0, 0
+    answer = [0, 0, 0, 0]
+    max_node = max(map(max, edges))
+    indegree, outdegree = [0] * (max_node+1), [0] * (max_node+1)
     
     for a, b in edges:
         outdegree[a] += 1
         indegree[b] += 1
-        maxnode = max(maxnode, a, b)
         
-    for i in range(1, maxnode+1):
+    for i in range(1, max_node+1):
+        #생성 노드
         if indegree[i] == 0 and outdegree[i] >= 2:
-            create  = i
+            answer[0]  = i
+        #막대 노드
         elif indegree[i] >= 1 and outdegree[i] == 0:
-            stick += 1
+            answer[2] += 1
+        #8자 노드
         elif indegree[i] >= 2 and outdegree[i] == 2:
-            eight += 1
-            
-    donut = outdegree[create] - stick - eight
-    return [create, donut, stick, eight]
+            answer[3] += 1
+    #도넛 노드
+    answer[1] = outdegree[answer[0]] - sum(answer[2:])
+    return answer
 
 
 
