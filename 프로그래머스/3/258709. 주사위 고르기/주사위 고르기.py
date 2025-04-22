@@ -13,7 +13,7 @@ product 함수 사용해서 데카르트 곱으로 전체 나올 수 있는 주�
 -> a = [[1],[2],[3] . . .] 일 때 *a 해주면 [1], [2], [3], . . .로 리스트 까줌
 
 ------
-리스트 컴프리헨션 연습 및 약간의 추가
+리스트 컴프리헨션 연습 및 추가
 '''
 from itertools import combinations, product
 from bisect import bisect_left
@@ -23,29 +23,15 @@ def solution(dice):
     answer = 0
     result = []
     for aList in aLists:
-        bList = []
-        for i in range(len(dice)):
-            if i not in aList:
-                bList.append(i)
-        a_case = []
-        a_score = []
-        for i in aList:
-            a_case.append(dice[i])
-        a_score = [sum(i) for i in product(*a_case)]
-        # for i in product(*a_case):
-        #     a_score.append(sum(i))
-            
-        b_case = []
-        b_score = []
-        for i in bList:
-            b_case.append(dice[i])
-        b_score = [sum(i) for i in product(*b_case)]
-        # for i in product(*b_case):
-        #     b_score.append(sum(i))
-        b_score.sort()
+        bList = [i for i in range(len(dice)) if i not in aList]
+        
+        a_score = [sum(i) for i in product(*[dice[i] for i in aList])]
+        b_score = sorted([sum(i) for i in product(*[dice[i] for i in bList])])
+        
         cnt = 0
         for i in a_score:
             cnt += bisect_left(b_score, i)
+            
         if answer < cnt:
             answer = cnt
             result = aList
