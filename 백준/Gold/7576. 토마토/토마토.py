@@ -8,6 +8,7 @@ bfs 사용
 익은 토마토 좌표 한 번 다 돌 때마다 day + 1
 -> 첫 번째 제출 시간초과 -> sys 추가, 토마토 리스트 말고 deque로 변경 -> 마지막에 틀렸습니다.
 -> 위에서 n, m 변수 바꿔놓고 마지막에 입력받은 값이라 생각하고 써서 틀린거였음 ....
++ bfs 함수화
 '''
 import sys
 from collections import deque
@@ -19,6 +20,19 @@ mapp = []
 tomato = deque()
 day = 0
 count = 0
+def bfs():
+    global day
+    while tomato:
+        day += 1
+        length = len(tomato)
+        for i in range(length):
+            nn, mm = tomato.popleft()
+            for i in range(4):
+                nx, ny = nn+dx[i], mm+dy[i]
+                if 0 <= nx < len(mapp) and 0 <= ny < len(mapp[0]):
+                    if mapp[nx][ny] == 0:
+                        mapp[nx][ny] = 1
+                        tomato.append((nx,ny))
 for i in range(n):
     mapp.append(list(map(int, input().split())))
 
@@ -31,17 +45,8 @@ if not tomato:
     print(-1)
     exit()
     
-while tomato:
-    day += 1
-    length = len(tomato)
-    for i in range(length):
-        nn, mm = tomato.popleft()
-        for i in range(4):
-            nx, ny = nn+dx[i], mm+dy[i]
-            if 0 <= nx < len(mapp) and 0 <= ny < len(mapp[0]):
-                if mapp[nx][ny] == 0:
-                    mapp[nx][ny] = 1
-                    tomato.append((nx,ny))
+
+bfs()
 fail = False
 for i in range(n):
     if 0 in mapp[i]:
