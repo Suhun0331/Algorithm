@@ -21,22 +21,19 @@ for i in range(t):
         print('error')
         continue
     q = deque((lst[1:-1].split(',')))
-    # print(q)
     for i in order:
         if i == 'R':
-            if R:
-                R = False
-            else:
-                R = True
+            R = not R
         elif i == 'D':
             if not q:
-                print('error', end = '')
+                print('error')
                 error = True
                 break
             if R:
                 q.popleft()
             else:
                 q.pop()
+                '''
     q = list(q)
     if len(q) > 2:
         for i in range(len(q)):
@@ -57,6 +54,10 @@ for i in range(t):
                     print(q[i], end = '')
         print(']', end = '')
     print()
-        # print(list(q))
-        
+    '''
+    if not error:
+        if not R:
+            q.reverse()
+        print('[' + ','.join(q)+ ']')
+
     
