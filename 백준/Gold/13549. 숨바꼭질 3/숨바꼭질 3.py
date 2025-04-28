@@ -16,27 +16,22 @@ if n >= k:
     print(n-k)
     exit()
 
-count = [100001] * 200002
+count = [100001] * 100001
 time = 0
 count[n] = time
 q = deque()
 q.append(n)
 current = n
+def update(current, time):
+    if  0 <= current <= 100000:
+        if count[current] > time:
+            count[current] = time
+            q.append(current)
 while q:
     current = q.popleft()
     time = count[current]
-    if current-1 >= 0:
-        if count[current-1] > time+1:
-            count[current-1] = time+1
-            q.append(current-1)
-    if current + 1 <= 100000:
-        if count[current+1] > time+1:
-            count[current+1] = time+1
-            q.append(current+1)
-    if current * 2 <= 100000:
-        if count[current*2] > time:
-            count[current*2] = time
-            q.append(current*2)
+    update(current-1, time+1)
+    update(current+1, time+1)
+    update(current*2, time)
         
 print(count[k])
-#print(count[:20])
