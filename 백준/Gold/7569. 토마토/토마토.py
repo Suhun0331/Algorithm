@@ -41,17 +41,21 @@ for i in range(h):
                 q.append((i, j, k))
     
 #m:가로, n:세로, h:높이(h, n, m)
-while q:
-    count += 1
-    length = len(q)
-    for i in range(length):
-        ch, cn, cm = q.popleft()
-        for i in range(6):
-            nh, nn, nm = ch+dx[i], cn+dy[i] , cm+dz[i]
-            if 0<=nh<h and 0<=nn<n and 0<=nm<m:
-                if not visited[nh][nn][nm] and tomato[nh][nn][nm] == 0:
-                    tomato[nh][nn][nm] = 1
-                    q.append((nh, nn, nm))
+def bfs():
+    global count
+    while q:
+        count += 1
+        length = len(q)
+        for i in range(length):
+            ch, cn, cm = q.popleft()
+            for i in range(6):
+                nh, nn, nm = ch+dx[i], cn+dy[i] , cm+dz[i]
+                if 0<=nh<h and 0<=nn<n and 0<=nm<m:
+                    if not visited[nh][nn][nm] and tomato[nh][nn][nm] == 0:
+                        tomato[nh][nn][nm] = 1
+                        q.append((nh, nn, nm))
+
+bfs()
     
 for i in range(h):
     for j in range(n):
