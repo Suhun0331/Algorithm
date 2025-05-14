@@ -5,6 +5,9 @@ dfs로 깊이 4까지 들어가기 - visit 처리하면 모든 경우의 수 다
 dfs 쓰면 안됨 -> ㅗ 모양 처리 못함. 얘만 따로 처리 해도 될 듯 
 
 1차 제출 -> 시간초과 -> 매 반복마다 visited 만들지 말고 그냥 재사용
+
+-----
+가지치기 코드 추가
 '''
 import sys
 input = sys.stdin.readline
@@ -16,12 +19,16 @@ dx = [1, -1, 0, 0]
 dy = [0, 0, 1, -1]
 visited = [[0 for _ in range(m)] for _ in range(n)]
 
-
 for i in range(n):
     table.append(list(map(int, input().split())))
+max_val = max(map(max, table))
     
 def dfs(n, m, visited, sum, count): # (n, m)
     global answer
+
+    if sum + (max_val * (4 - count)) <= answer:
+        return
+        
     if count == 4:
         answer = max(answer, sum)
         return
