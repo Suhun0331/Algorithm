@@ -1,16 +1,18 @@
-lst = []
-for i in range(9):
-    lst.append(int(input()))
-check = 0
-for i in range(8):
-    for j in range(i+1, 9):
-        if (sum(lst) - lst[i] - lst[j]) == 100:
-            del lst[j]
-            del lst[i]
-            check = 1
-            break
-    if check == 1:
-        break
-lst = sorted(lst)
-for i in lst:
-    print(i)
+import sys
+input = sys.stdin.readline
+
+num = []
+
+for _ in range(9):
+    num.append(int(input()))
+
+for i in range(8): # 0 ~ 7
+    for j in range(i, 9): # i ~ 8
+        copy = num[:]
+        del copy[j]
+        del copy[i]
+        if sum(copy) == 100:
+            copy.sort()
+            for n in copy:
+                print(n)
+            exit()
