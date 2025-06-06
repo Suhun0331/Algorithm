@@ -9,23 +9,16 @@
 1. 순열로 모든 경우 구하기
 2. dfs사용하기
 '''
-from itertools import permutations
-
 def solution(k, dungeons):
-    turn = list(permutations(range(len(dungeons))))
+    visited = [False] * len(dungeons)
     answer = 0
-    for i in turn:
-        piro = k
-        count = 0
-        for idx in i:
-            if piro >= dungeons[idx][0]:
-                piro -= dungeons[idx][1]
-                count += 1
-            else:
-                break
+    def dfs(count, piro):
+        nonlocal answer
         answer = max(answer, count)
-        
+        for i in range(len(dungeons)):
+            if not visited[i] and piro >= dungeons[i][0]:
+                visited[i] = True
+                dfs(count + 1, piro-dungeons[i][1])
+                visited[i] = False
+    dfs(0, k)
     return answer
-    
-    
-    
