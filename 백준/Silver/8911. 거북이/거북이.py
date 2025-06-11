@@ -27,7 +27,6 @@ for _ in range(t):
         
         path.add((y, x))
     
-    path = list(path)
     min_y, min_x, max_y, max_x = float('inf'), float('inf'),0, 0
     for i in path:
         min_y = min(min_y, i[0])
