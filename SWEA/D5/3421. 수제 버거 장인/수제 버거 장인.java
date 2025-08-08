@@ -68,7 +68,7 @@ class Solution
 				map[num2][num1] = true;
 			}
 			
-			dfs(1, 0); // (start, depth)
+			dfs(1); // (start, depth)
 			
 			sb.append("#").append(t+1).append(" ").append(count).append("\n");
 			
@@ -77,7 +77,7 @@ class Solution
 		
 	}
 	
-	public static void dfs(int start, int depth) {
+	public static void dfs(int start) {
 		
 		for (int i = start; i <= n; i++) {
 			
@@ -86,7 +86,7 @@ class Solution
 				
 				boolean conflict = false;
 		        for (int j = 1; j <= n; j++) {
-		            if (visited[j] && map[i][j]) { // i와 j가 같이 못 쓰는 쌍이면
+		            if (visited[j] && map[i][j]) {
 		                conflict = true;
 		                break;
 		            }
@@ -96,7 +96,7 @@ class Solution
 				
 				count += 1;
 				visited[i] = true;
-				dfs(i, depth+1);
+				dfs(i+1);
 				visited[i] = false;
 			}
 		}
