@@ -25,79 +25,57 @@
 //System.out.println(var);		       				   // 문자열 1개 출력하는 예제
 //System.out.println(AB);		       				     // long 변수 1개 출력하는 예제
 /////////////////////////////////////////////////////////////////////////////////////////////
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-class Solution
-{
-	static int[] dx = {1, 0, -1, 0};
-	static int[] dy = {0, 1, 0, -1};
-	static int[][] arr;
-	static int answer;
-	static int sub;
-	static int n;
+public class Solution {
+	static int T, N;
+	static int [][] A = new int[1000][1000];
+	static int [][] D;
 	
-	public static void main(String[] Args) throws IOException{
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
-		StringBuilder sb = new StringBuilder();
-		
-		int T = Integer.parseInt(br.readLine());
-		
-		for (int t = 0; t < T; t++) {
-			
-			n = Integer.parseInt(br.readLine());
-			
-			arr = new int[n][n];
-			answer = 0;
-			int idx = 0;
-			int[] answerlst = new int[n*n+1];
-			
-			
-			for (int i = 0; i < n; i++) {
-				st = new StringTokenizer(br.readLine());
-				for (int j = 0; j < n; j++) {
-					arr[i][j] = Integer.parseInt(st.nextToken());
-				}
-			}
-			
-			for (int i = 0; i < n; i++) {
-				for (int j = 0; j < n; j++) {
-					
-					sub = 1;
-					dfs(i, j);
-					answerlst[arr[i][j]] = sub;
-					answer = Math.max(answer, sub);
-					
-				}
-			}
-			
-			for (int i = 0; i < answerlst.length; i++) {
-				if(answerlst[i] == answer) {
-					idx = i;
-					break;
-				}
-			}
-			
-			sb.append("#").append(t+1).append(" ").append(idx).append(" ").append(answer).append("\n");
-		}
-		
-		System.out.print(sb);
+	static int dr[] = {0,0,1,-1};
+	static int dc[] = {1,-1,0,0};
 
+	static int dfs(int r, int c) {
+		if (D[r][c] > 0) return D[r][c];
+		for (int k=0;k<4;++k) {
+			int nr = r + dr[k];
+			int nc = c + dc[k];
+			if (0<=nr&&nr<N&&0<=nc&&nc<N)
+				if (A[nr][nc] == A[r][c] + 1)
+					return D[r][c] = dfs(nr,nc) + 1;
+		}
+		return 0;
 	}
 	
-	public static void dfs(int x, int y) { //(x, y)
-		for (int i = 0; i < 4; i++) {
-			int nx = x + dx[i];
-			int ny = y + dy[i];
-			if(0 <= nx && nx < n && 0 <= ny && ny < n) {
-				if(arr[x][y] + 1 == arr[nx][ny]) {
-					sub += 1;
-					dfs(nx, ny);
-				}
-			}
-		}
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
+		T = Integer.parseInt(br.readLine());
+		for (int t=1;t<=T;++t) {
+			N = Integer.parseInt(br.readLine());
+				
+			for (int i=0;i<N;++i) {
+				StringTokenizer st = new StringTokenizer(br.readLine());
+				for (int j=0;j<N;++j)
+					A[i][j] = Integer.parseInt(st.nextToken());
+			}
+			
+			D = new int[N][N];
+			
+			int max = -1, maxRoom = 0;
+			for (int i=0;i<N;++i)
+				for (int j=0;j<N;++j) {
+					int res = dfs(i,j);
+					if (res > max || (res==max && A[i][j] < maxRoom)) {
+						max = res;
+						maxRoom = A[i][j];
+					}
+				}
+
+			System.out.printf("#%d %d %d\n", t, maxRoom, max+1);
+			
+		}
 	}
 }
