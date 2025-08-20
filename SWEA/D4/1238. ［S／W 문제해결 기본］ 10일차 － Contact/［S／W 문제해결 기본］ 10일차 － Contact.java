@@ -74,28 +74,21 @@ class Solution
     	q.add(start);
     	visited[start] = true;
     	int depth = 0;
-    	List<Integer> subarr = new ArrayList<>();
     	
     	while(!q.isEmpty()) {
-    		answer = 0;
-    		for (int i = 0; i < subarr.size(); i++) {
-    			answer = Math.max(answer,  subarr.get(i));
-        	}
-    		subarr = new ArrayList<>();
     		int size = q.size();
-    		
+    		answer = 0;
     		for (int i = 0; i < size; i++) {
     			int next = q.poll();
+        		answer = Math.max(answer,  next);
         		for(int n : graph[next]) {
         			if(!visited[n]) {
-        				subarr.add(n);
         				visited[n] = true;
         				q.add(n);
         			}
         		}
 			}
     		
-    	
     	}
     	
     }
