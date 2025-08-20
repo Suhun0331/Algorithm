@@ -67,20 +67,13 @@ class Solution
 				visited = new boolean[100][100];
 				count = 0;
 				
-				for (int i = 0; i < n; i++) {
-					for (int j = 0; j < n; j++) {
-						if(arr[i][j] == day) {
-							arr[i][j] = 0;                                 
-						}
-					}
-				}
 				
 				for (int i = 0; i < n; i++) {
 					for (int j = 0; j < n; j++) {
 						
-						if(!visited[i][j] && arr[i][j] != 0) {
+						if(!visited[i][j] && arr[i][j] > day) {
 							count += 1;
-							bfs(i, j);
+							bfs(i, j, day);
 						}
 						
 					}
@@ -96,7 +89,7 @@ class Solution
         System.out.print(sb);
     }
 	
-	public static void bfs(int i, int j) {
+	public static void bfs(int i, int j, int day) {
 		visited[i][j] = true;
 		q = new ArrayDeque<>();
 		q.add(new int[] {i, j});
@@ -108,7 +101,7 @@ class Solution
 			for (int k = 0; k < 4; k++) {
 				int ni = ci + dx[k];
 				int nj = cj + dy[k];
-				if(0 <= ni && ni < n && 0 <= nj && nj < n && !visited[ni][nj] && arr[ni][nj] != 0) {
+				if(0 <= ni && ni < n && 0 <= nj && nj < n && !visited[ni][nj] && arr[ni][nj] > day) {
 					visited[ni][nj] = true;
 					q.add(new int[] {ni,nj});
 					
