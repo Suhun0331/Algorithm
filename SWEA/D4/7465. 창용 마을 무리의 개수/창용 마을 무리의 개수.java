@@ -25,67 +25,69 @@
 //System.out.println(var);		       				   // 문자열 1개 출력하는 예제
 //System.out.println(AB);		       				     // long 변수 1개 출력하는 예제
 /////////////////////////////////////////////////////////////////////////////////////////////
-import java.util.StringTokenizer;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
+import java.util.*;
 
-class Solution {
-	 
-    static int n,m;
-    static int[] parent;
+public class Solution {
 
-    static int getParent(int x) {
-    	if (parent[x]==x) return x;
-    	else return parent[x] = getParent(parent[x]);
-    }
+	static int[] parents;
+	static int answer;
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+
+		int T = Integer.parseInt(st.nextToken());
+
+		for (int test_case = 1; test_case <= T; test_case++) {
+
+			st = new StringTokenizer(br.readLine());
+			int N = Integer.parseInt(st.nextToken()); // 사람 수
+			int M = Integer.parseInt(st.nextToken()); // 관계 수
+
+			answer = 0;
+			parents = new int[N + 1];
+			for (int i = 1; i < parents.length; i++) {
+				parents[i] = i;
+			}
+
+			for (int i = 0; i < M; i++) {
+				st = new StringTokenizer(br.readLine());
+				int a = Integer.parseInt(st.nextToken());
+				int b = Integer.parseInt(st.nextToken());
+
+				union(a, b);
+
+			}
+
+			// 본인이 대표 노드인 경우
+			for (int i = 1; i < parents.length; i++) {
+				if (parents[i] == i) {
+					answer++;
+				}
+			}
+			System.out.println("#" + test_case + " " + answer);
+
+		}
+	}
     
-    static void unionParent(int x, int y) {
-      x = getParent(x);
-      y = getParent(y);
-      
-      if(x<y) 
-    	  parent[y]=x;
-      else 
-    	  parent[x]=y;
-    }
-     
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-     
-        int T = Integer.parseInt(br.readLine());
-        for(int t=1; t<=T; t++) {
-            //input
-            int answer=0;
-            StringTokenizer tk = new StringTokenizer(br.readLine());
-            n = Integer.parseInt(tk.nextToken());
-            m = Integer.parseInt(tk.nextToken());
-            parent = new int[n+1];
-            for(int i=1; i<=n; i++) {
-            	parent[i] = i;
-            }
-            
-          //solve
-            for(int i=0; i<m; i++) {    
-                tk = new StringTokenizer(br.readLine());
-                int from = Integer.parseInt(tk.nextToken());
-                int to = Integer.parseInt(tk.nextToken());
-                unionParent(from,to);
-            }
-             
-            //부모 값이 자기 자신과 같은 것의 개수가 그룹의 개수
-            for(int i=1; i<=n;i++) {
-            	if(parent[i]==i) {
-            		answer++;
-            	}
-            }
-             
-            //output
-            bw.write("#" + t+ " " + answer +'\n');
-        }
-        bw.close(); 
-    }
+    	private static void union(int a, int b) {
+		int pa = find(a);
+		int pb = find(b);
+
+		if (pa != pb) {
+			parents[pa] = pb;
+		}
+
+	}
+
+	private static int find(int a) {
+		if (parents[a] == a) {
+			return a;
+		} else {
+			return parents[a] = find(parents[a]);
+		}
+
+	}
+
 }
