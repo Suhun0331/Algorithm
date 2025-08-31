@@ -1,76 +1,95 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 public class Main {
+	
+	static class Node{
+		int start, end, weight;
+		public Node(int start, int end, int weight) {
+			super();
+			this.start = start;
+			this.end = end;
+			this.weight = weight;
+		}
+	}
+	
+	static int[] parent;
+	
+	public static void main(String[] args) throws Exception {
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		while(true) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int n = Integer.parseInt(st.nextToken()); //정점의 갯수
+			int m = Integer.parseInt(st.nextToken()); //간선의 갯수
+			if(n == 0 && m == 0) break;
+			
+			Node[] edgeList = new Node[m];
+			parent = new int[n+1]; //정점 번호가 1부터 시작
+			int result = 0;
+			
+			for(int i=0; i<m; i++) {
+				st = new StringTokenizer(br.readLine());
+				int start = Integer.parseInt(st.nextToken());
+				int end = Integer.parseInt(st.nextToken());
+				if(start == 0 && end == 0) break;
+				int weight = Integer.parseInt(st.nextToken());
+				
+				edgeList[i] = new Node(start, end, weight);
+				result += weight;
+			}
+			
+			
+			Arrays.sort(edgeList, new Comparator<Node>() { //가중치를 기준으로 정렬
 
-    static class Node {
-        int start, end, weight;
-        Node(int s, int e, int w) {
-            this.start = s; this.end = e; this.weight = w;
-        }
-    }
+				@Override
+				public int compare(Node o1, Node o2) {
+					return o1.weight - o2.weight;
+				}
+			});
+			
+			make(); //각 vertex를 단위 집합으로 만듦
+			
+			int cnt=0; //선택한 간선의 갯수
+			
+			for(int i=0; i<m; i++) {
+				Node edge = edgeList[i];
+				if(union(edge.start, edge.end)) { //간선 선택 가능하면
+					cnt++;
+					result-=edge.weight;
+					if(cnt==n-1) { //spanning tree 다 완성됐다면
+						break;
+					}
+				}
+			}
+			System.out.println(result);
+		}
+		
+		
+	}
 
-    static int[] parent;
-
-    static void make(int n) {
-        parent = new int[n];
-        for (int i = 0; i < n; i++) parent[i] = i;
-    }
-
-    static int find(int a) {
-        if (parent[a] == a) return a;
-        return parent[a] = find(parent[a]);
-    }
-
-    static boolean union(int a, int b) {
-        int ra = find(a), rb = find(b);
-        if (ra == rb) return false;
-        parent[rb] = ra;
-        return true;
-    }
-
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder out = new StringBuilder();
-
-        while (true) {
-            String line = br.readLine();
-            if (line == null || line.isEmpty()) break;
-
-            StringTokenizer st = new StringTokenizer(line);
-            int n = Integer.parseInt(st.nextToken()); // 정점 수 (0..n-1)
-            int m = Integer.parseInt(st.nextToken()); // 간선 수
-            if (n == 0 && m == 0) break;
-
-            Node[] edges = new Node[m];
-            long total = 0L;
-
-            for (int i = 0; i < m; i++) {
-                st = new StringTokenizer(br.readLine());
-                int s = Integer.parseInt(st.nextToken());
-                int e = Integer.parseInt(st.nextToken());
-                int w = Integer.parseInt(st.nextToken());
-                edges[i] = new Node(s, e, w);
-                total += w;
-            }
-
-            Arrays.sort(edges, (a, b) -> Integer.compare(a.weight, b.weight));
-
-            make(n);
-
-            long mst = 0L;
-            int picked = 0;
-            for (Node edge : edges) {
-                if (union(edge.start, edge.end)) {
-                    mst += edge.weight;
-                    if (++picked == n - 1) break;
-                }
-            }
-
-            long saving = total - mst;
-            out.append(saving).append('\n');
-        }
-
-        System.out.print(out);
-    }
+	private static void make() { //서로소 단위집합 만들기
+		for(int i=1; i<parent.length; i++) {
+			parent[i]=i;
+		}
+	}
+	
+	private static int find(int a) {
+		
+		if(parent[a]==a)
+			return a;
+		
+		return parent[a] = find(parent[a]);
+	}
+	
+	private static boolean union(int a, int b){
+		int aRoot = find(a);
+		int bRoot = find(b);
+		
+		if(aRoot==bRoot)
+			return false;
+		
+		parent[bRoot] = aRoot;
+		return true;
+	}
 }
